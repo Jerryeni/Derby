@@ -104,7 +104,7 @@ export function TokenProgress({
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
             />
-            <span className="text-gray-200 md:text-sm text-[8px]">1 UCC =</span>
+            <span className="text-gray-200 md:text-sm text-[8px]">1 DERBY =</span>
             <div className="flex items-center gap-2">
               <img
                 src="/images/tether.svg"
@@ -127,7 +127,7 @@ export function TokenProgress({
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
             />
-            <span className="text-gray-200 md:text-sm text-[8px]">1 UCC =</span>
+            <span className="text-gray-200 md:text-sm text-[8px]">1 DERBY =</span>
             <div className="flex items-center gap-2">
               <img
                 src="/images/tether.svg"

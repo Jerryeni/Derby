@@ -39,7 +39,7 @@ const {isConnected} = useAccount();
             </Link>
 
 
-            <span className="text-lg md:text-xl font-normal">UCC 2.0</span>
+            <span className="text-lg md:text-xl font-normal">DERBY</span>
           </div>
 
           
@@ -132,7 +132,7 @@ const {isConnected} = useAccount();
                       width={24}
                       height={24}
                     />
-                    <span className="text-white text-lg font-normal">UCC 2.0</span>
+                    <span className="text-white text-lg font-normal">DERBY</span>
                   </div>
                   <Button
                     variant="ghost"

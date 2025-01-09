@@ -9,9 +9,9 @@ import XIcon from "@/public/images/x.svg";
 const FOOTER_LINKS = {
 
   "Socials": [
-    { label: "X", href: "https://x.com/ucchainofficial", icon: XIcon },
-    { label: "Telegram Channel", href: "https://t.me/ucchainofficial", icon: TelegramIcon },
-    { label: "Telegram Chat", href: "https://t.me/ucchaincommunity", icon: TelegramIcon },
+    { label: "X", href: "https://x.com/Derbyofficial", icon: XIcon },
+    { label: "Telegram Channel", href: "https://t.me/Derbyofficial", icon: TelegramIcon },
+    { label: "Telegram Chat", href: "https://t.me/Derbycommunity", icon: TelegramIcon },
    
     
   ]
@@ -32,10 +32,10 @@ export default function Footer() {
                 height={24}
                 priority
               />
-              <span className="text-xl font-bold">UCChain</span>
+              <span className="text-xl font-bold">Derby</span>
             </Link>
             <p className="text-gray-400 text-sm">
-              © 2024 UCChain Network. All rights reserved.
+              © 2024 Derby Network. All rights reserved.
             </p>
           </div>
 
