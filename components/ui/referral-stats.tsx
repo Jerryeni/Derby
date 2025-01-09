@@ -74,7 +74,7 @@ export function ReferralStats({
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-          <div className="text-sm text-gray-400 mb-1">Total Earnings (UCC)</div>
+          <div className="text-sm text-gray-400 mb-1">Total Earnings (DERBY)</div>
           <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsucc} (${usdtprice})</div>
         </div>
       </div>
@@ -112,7 +112,7 @@ export function ReferralStats({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-            <div className="text-sm text-gray-400 mb-1">Coins allocated (XEE)</div>
+            <div className="text-sm text-gray-400 mb-1">Coins allocated (DERBY)</div>
             <div className="text-2xl font-bold text-primary">{userVirtualToken}</div>
           </div>
         </div>

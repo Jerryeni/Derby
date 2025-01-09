@@ -78,8 +78,8 @@ export const VESTING_SCHEDULE: VestingSchedule = {
 };
 
 export const ICO_CONFIG = {
-  name: 'UCC Network',
-  symbol: 'UCC',
+  name: 'DERBY Network',
+  symbol: 'DERBY',
   decimals: 18,
   contractAddress: {
     bsc: '0x...',

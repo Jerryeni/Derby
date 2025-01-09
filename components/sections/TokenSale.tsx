@@ -52,7 +52,7 @@ export default function TokenSale() {
         </div>
 
         <Button className="w-full text-lg py-6" size="lg">
-          Buy $UCC
+          Buy $DERBY
         </Button>
       </div>
     </section>

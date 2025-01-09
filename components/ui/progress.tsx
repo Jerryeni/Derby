@@ -71,7 +71,7 @@ const Progress = React.forwardRef<
             <div className="bg-[#2a2a2a] border border-gray-500 border-opacity-40 break-words flex-wrap  rounded-xl py-1 px-2 shadow-lg">
               <div className="text-center">
                 <div className="text-xs md:text-sm font-bold text-white">
-                  {dynamicTokensSold.toLocaleString()} UCC
+                  {dynamicTokensSold.toLocaleString()} DERBY
                 </div>
                 <div className="text-[8px] md:text-xs text-gray-400">
                   TOKENS SOLD

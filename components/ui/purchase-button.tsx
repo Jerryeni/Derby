@@ -50,7 +50,7 @@ export function PurchaseButton({ status, onClick, disabled }: PurchaseButtonProp
           </>
         );
       default:
-        return "Buy $UCC";
+        return "Buy $DERBY";
         
     }
   };

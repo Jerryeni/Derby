@@ -27,7 +27,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-6">
               <Image
                 src="/images/icon.png"
-                alt="ucc-logo"
+                alt="derby-logo"
                 width={24}
                 height={24}
                 priority

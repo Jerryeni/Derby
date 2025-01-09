@@ -31,7 +31,7 @@ const {isConnected} = useAccount();
             >
               <Image
                 src="/images/icon.png"
-                alt="ucc-logo"
+                alt="derby-logo"
                 width={24}
                 height={24}
                 priority
@@ -63,7 +63,7 @@ const {isConnected} = useAccount();
 
                       </Link>
             <Link
-                href='https://x.com/ucchainofficial'
+                href='https://x.com/derbyhainofficial'
                 className="text-muted-foreground hover:text-foreground transition-colors font-light"
               >
                 <Image
@@ -76,7 +76,7 @@ const {isConnected} = useAccount();
                 
               </Link>
               <Link
-                href='https://t.me/ucchaincommunity'
+                href='https://t.me/derbyhaincommunity'
                 className="text-muted-foreground hover:text-foreground transition-colors font-light"
               >
                 <Image
@@ -128,7 +128,7 @@ const {isConnected} = useAccount();
                   <div className="flex items-center space-x-2">
                     <Image
                       src="/images/icon.png"
-                      alt="ucc-logo"
+                      alt="derby-logo"
                       width={24}
                       height={24}
                     />
@@ -152,13 +152,13 @@ const {isConnected} = useAccount();
                    
                     <div className="social flex gap-4 items-center">
                       <Link
-                        href='https://x.com/ucchainofficial'
+                        href='https://x.com/derbyhainofficial'
                         className="text-muted-foreground flex items-center hover:text-foreground transition-colors font-light"
                       >
                         
                         <Image
                           src="/images/x.svg"
-                          alt="ucc-logo"
+                          alt="derby-logo"
                           width={24}
                           height={24}
                           priority
@@ -179,7 +179,7 @@ const {isConnected} = useAccount();
 
                       </Link>
                       <Link
-                        href='https://t.me/ucchaincommunity'
+                        href='https://t.me/derbyhaincommunity'
                         className="text-muted-foreground gap-1 flex items-center hover:text-foreground transition-colors font-light"
                       >
                         <Image

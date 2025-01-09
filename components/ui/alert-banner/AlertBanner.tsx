@@ -33,7 +33,7 @@ export function AlertBanner() {
           <div className="mx-auto w-fit flex items-center justify-center ">
           <Image
             src="/images/ucchain-logo.png"
-            alt="ucc-logo"
+            alt="derby-logo"
             width={150}
             height={10}
             priority
@@ -45,7 +45,7 @@ export function AlertBanner() {
             title="Join Presale - Earn 10X at Listing"
             subtitle="Refer and Earn"
             details="Get 30% Referral Rewards"
-            details2="( 15% USDT + 15% UCC )"
+            details2="( 15% USDT + 15% DERBY )"
           />
 
           <div className="text-center space-y-6">

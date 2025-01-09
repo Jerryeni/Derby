@@ -99,7 +99,7 @@ export function TokenProgress({
           <div className="flex items-center justify-center gap-1">
             <Image
               src="/images/icon.png"
-              alt="ucc-logo"
+              alt="derby-logo"
               width={12}
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
@@ -122,7 +122,7 @@ export function TokenProgress({
           <div className="flex items-center justify-center gap-1">
             <Image
               src="/images/icon.png"
-              alt="ucc-logo"
+              alt="derby-logo"
               width={12}
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
@@ -176,27 +176,19 @@ export function TokenProgress({
         </span> </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4">
-          {selectedToken === "BNB" ? (
-            <div className="col-span-2 mb-8 rounded-full p-3 glass-card w-fit mx-auto text-center text-gray-400 text-lg md:text-xl font-semibold">
-              Coming Soon
-            </div>
-          ) : (
-            <>
-              <AmountInput
-                value={amount}
-                onChange={handleAmountChange}
-                token={selectedToken}
-                tokenIcon={SUPPORTED_TOKENS[selectedToken].icon}
-              />
-              <AmountInput
-                value={amount ? calculateTokenAmount(amount) : ''}
-                onChange={() => { }}
-                token="DERBY"
-                tokenIcon="/images/icon.png"
-                readOnly
-              />
-            </>
-          )}
+          <AmountInput
+            value={amount}
+            onChange={handleAmountChange}
+            token={selectedToken}
+            tokenIcon={SUPPORTED_TOKENS[selectedToken].icon}
+          />
+          <AmountInput
+            value={amount ? calculateTokenAmount(amount) : ""}
+            onChange={() => {}}
+            token="DERB"
+            tokenIcon="/images/icon.png"
+            readOnly
+          />
         </div>
 
         <PurchaseButton
