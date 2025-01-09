@@ -60,9 +60,9 @@ export interface TokenDistribution {
 }
 
 export interface VestingParams {
-  cliff: number;    
-  duration: number; 
-  tge: number;      
+  cliff: number;
+  duration: number;
+  tge: number;
 }
 
 export interface VestingSchedule {
@@ -112,18 +112,18 @@ export type TokenSale = {
 };
 
 export type UCCInfo = {
-  totalInvestmentsUSDT:number;
-  totalInvestmentsBNB:number;
-  totalUsers:number;
-  priceUSDT:number;
-  priceBNB:number;
-  totalTokensToBEDistributed:number;
-  getAllUsersVirtualToken:number;
+  totalInvestmentsUSDT: number;
+  totalInvestmentsBNB: number;
+  totalUsers: number;
+  priceUSDT: number;
+  priceBNB: number;
+  totalTokensToBEDistributed: number;
 }
 
 export type UserUCCInfo = {
-  userId:number;
-  usersInfo:any;
-  recentActivities:any[];
+  userId: number;
+  usersInfo: any;
+  recentActivities: any[];
   activityLength: any;
+  usersVirtualToken: any;
 }

@@ -25,11 +25,11 @@ export function usePresale() {
   const [curPage, setCurPage] = useState<number>(1);
   const [totalTokens, setTotalToken] = useState<number>(0);
   const [uccInfo, setUCCInfo] = useState<UCCInfo>({
-    totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0, getAllUsersVirtualToken: 0
+    totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0
   });
 
   const [userUCCInfo, setUserUCCInfo] = useState<UserUCCInfo>({
-    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0
+    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0
   });
 
   async function initWallet() {
@@ -216,21 +216,21 @@ export function usePresale() {
 
   // const claimVirtualTokens = async () => {
   //   try {
-  
+
   //     // Call the contract function
   //     await writeContract(config, {
   //       abi: PRESALE_ABI,
   //       address: ADDRESSES.PRESALE,
   //       functionName: 'claimVirtualTokens',
   //     });
-  
+
   //     toast.success("Virtual tokens claimed successfully!", {
   //       duration: 3000,
   //       position: "top-right",
   //     });
 
   //     console.log("Claimed");
-  
+
   //   } catch (error: any) {
   //     console.error(error);
   //     toast.error(error.reason || "An error occurred while claiming tokens.", {
@@ -295,13 +295,6 @@ export function usePresale() {
         address: ADDRESSES.PRESALE,
         functionName: 'priceBNB',
       });
-      const getAllUsersVirtualToken = await readContract(config, {
-        abi: PRESALE_ABI,
-        address: ADDRESSES.PRESALE,
-        functionName: 'usersVirtualToken',
-        args: [userUCCInfo.userId],
-      }) || 0;
-      
       const totalTokensToBEDistributed = await readContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
@@ -309,11 +302,9 @@ export function usePresale() {
       });
 
       setTotalToken(b2i(totalTokensToBEDistributed));
-
       return {
         totalInvestmentsUSDT: b2i(totalInvestmentsUSDT),
         totalInvestmentsBNB: b2f(totalInvestmentsBNB),
-        getAllUsersVirtualToken: b2f(getAllUsersVirtualToken),
         totalUsers,
         priceUSDT: b2f(priceUSDT),
         priceBNB: b2f(priceBNB),
@@ -322,7 +313,7 @@ export function usePresale() {
     } catch (error: any) {
       console.error("Error fetching UCC info:", error);
       return {
-        totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0, getAllUsersVirtualToken: 0
+        totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0
       };
     }
   }
@@ -358,17 +349,24 @@ export function usePresale() {
           args: [userId, cpage]
         });
       }
-
+      const usersVirtualToken = await readContract(config, {
+        abi: PRESALE_ABI,
+        address: ADDRESSES.PRESALE,
+        functionName: 'usersVirtualToken',
+        args: [userId],
+      }) || 0;
+      console.log({ usersVirtualToken });
       return {
         userId: userId,
         usersInfo: userId === 0 ? null : usersInfo,
         recentActivities,
         activityLength: parseInt(activityLength.toString()),
+        usersVirtualToken: usersVirtualToken
       };
     } catch (error: any) {
       console.error("Error fetching user info:", error);
       return {
-        userId: 0, usersInfo: null, recentActivities: [], activityLength: 0
+        userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0
       };
     }
   }

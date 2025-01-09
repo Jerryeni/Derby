@@ -44,7 +44,9 @@ export default function Hero() {
 
     return () => clearInterval(timer);
   }, []);
-
+  useEffect(() => {
+    console.log(userUCCInfo);
+  }, [userUCCInfo]);
   // console.log(userUCCInfo.usersInfo[3])
   return (
     <section className="relative min-h-screen pt-20 flex mb-10 flex-col items-center justify-center overflow-hidden">
@@ -105,7 +107,7 @@ export default function Hero() {
               userDepositsBNB={userUCCInfo.usersInfo?.[4] ?? 0}
               userEarningsBNB={userUCCInfo.usersInfo?.[6] ?? 0}
               userEarningsUSDT={userUCCInfo.usersInfo?.[5] ?? 0}
-              userVirtualToken={uccInfo.getAllUsersVirtualToken}
+              userVirtualToken={userUCCInfo.usersVirtualToken}
               userId={userUCCInfo.userId}
               userTokens={userUCCInfo.usersInfo?.[7] ?? 0}
               progress={
