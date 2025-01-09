@@ -191,7 +191,7 @@ export function TokenProgress({
               <AmountInput
                 value={amount ? calculateTokenAmount(amount) : ''}
                 onChange={() => { }}
-                token="UCC"
+                token="DERBY"
                 tokenIcon="/images/icon.png"
                 readOnly
               />
