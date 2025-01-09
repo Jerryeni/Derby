@@ -311,7 +311,7 @@ export function usePresale() {
         totalTokensToBEDistributed: b2i(totalTokensToBEDistributed),
       };
     } catch (error: any) {
-      console.error("Error fetching UCC info:", error);
+      console.error("Error fetching DERBY info:", error);
       return {
         totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0
       };
