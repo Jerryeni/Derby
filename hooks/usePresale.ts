@@ -298,7 +298,8 @@ export function usePresale() {
       const getAllUsersVirtualToken = await readContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
-        functionName: 'getAllUsersVirtualToken',
+        functionName: 'usersVirtualToken',
+        args: [userUCCInfo.userId],
       }) || 0;
       
       const totalTokensToBEDistributed = await readContract(config, {
