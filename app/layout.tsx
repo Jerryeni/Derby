@@ -9,7 +9,7 @@ import ContextProvider from '@/context'
 import { headers } from "next/headers";
 
 export const metadata: Metadata = {
-  title: "UCChain Network",
+  title: "Derby Network",
   description:
     "Join presale & get profit from Trading Pool in USDT every month.",
 };
