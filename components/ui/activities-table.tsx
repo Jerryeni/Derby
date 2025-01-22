@@ -71,7 +71,7 @@ export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
               </TableCell> */}
               <TableCell>
                 {activity.mode == 1
-                  ? parseInt(activity.refId.toString())
+                  ? parseInt(activity.refId?.toString())
                   : parseInt(activity.id.toString())}
               </TableCell>
               <TableCell>

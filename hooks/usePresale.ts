@@ -52,7 +52,7 @@ async function getLevelDetails(userId: number, level: number): Promise<UserLevel
       const details = await readContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
-        functionName: 'getUserLevelDetails',
+        functionName: 'getLevelDetails',
         args: [userId, level],
       });
       return details as UserLevelDetail[];
