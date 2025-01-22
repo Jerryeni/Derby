@@ -63,7 +63,7 @@ export function LevelDetailsAccordion({
   if (!showLevels) return null;
   return (
     <Accordion type="single" collapsible>
-      {userLevels.map((level, index) => {
+      {userLevels.length > 0 ? userLevels.map((level, index) => {
         const levelId = `level-${index}`;
         return (
           <AccordionItem
@@ -107,7 +107,11 @@ export function LevelDetailsAccordion({
             </AccordionContent>
           </AccordionItem>
         );
-      })}
+      }): <>
+        <div className="text-sm text-gray-500">
+          No levels available
+        </div>
+      </>}
     </Accordion>
   );
 }
