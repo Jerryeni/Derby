@@ -11,14 +11,16 @@ import { AmountInput } from "./amount-input";
 import { PurchaseButton } from "./purchase-button";
 import { ReferralStats } from "./referral-stats";
 import { ActivitiesTable, Activity } from "@/components/ui/activities-table";
-import { b2f, usePresale } from "@/hooks/usePresale";
-
+import { b2f, b2i, usePresale, } from "@/hooks/usePresale";
+import { toast } from "@/components/ui/use-toast";
+import { LevelDetailsAccordion } from "./level-details";
+import { UserLevelDetail } from "@/lib/types";
 interface TokenProgressProps {
   tokenUSDTPrice: number;
   tokenBNBPrice: number;
   tokensSold: number;
   totalTokens: number;
-  userInfo:any;
+  userInfo: any;
   userId: number;
   userDepositsUSDT: number;
   userDepositsBNB: number;
@@ -29,7 +31,18 @@ interface TokenProgressProps {
   activities: Activity[];
   activitiesLength: number;
   progress: number;
+  userTeamStats: any;
+  userLevels: {
+    level: BigInt;
+    userCount: BigInt;
+    totalAmount: BigInt;
+  }[];
+  getLevelDetails: (
+    userId: number,
+    level: number
+  ) => Promise<UserLevelDetail[]>;
 }
+
 
 export function TokenProgress({
   tokenUSDTPrice,
@@ -46,31 +59,43 @@ export function TokenProgress({
   userTokens,
   activities,
   activitiesLength,
+  userTeamStats,
+  userLevels,
+  getLevelDetails
 }: TokenProgressProps) {
   // const progress = (tokensSold / totalTokens) * 100;
   const [selectedToken, setSelectedToken] = useState("USDT");
   const [amount, setAmount] = useState("");
+  const [email, setEmail] = useState("");
   const { status, buyWithUSDT, buyWithBNB } = usePresale();
   const [showActivities, setShowActivities] = useState(false);
+  const [showLevels, setShowLevels] = useState(false);
   // console.log(status);
   const handleAmountChange = (value: string) => {
     if (value === "" || /^\d*\.?\d*$/.test(value)) {
       setAmount(value);
     }
   };
-// console.log(  `{tokenUSDTPrice}: ${tokenUSDTPrice},
-//   {tokenBNBPrice}: ${tokenBNBPrice},
-//   {tokensSold}: ${tokensSold},
-//   {totalTokens}: ${totalTokens},
-//   {userId}: ${userId},kenUSDTPrice}: 0,
-//   {userDepositsUSDT}: ${userDepositsUSDT},
-//   {userDepositsBNB}: ${userDepositsBNB},
-//   {progress}: ${progress},
-//   {userEarningsBNB}: ${userEarningsBNB},
-//   {userEarningsUSDT}: ${userEarningsUSDT},
-//   {userTokens}: ${userTokens},
-//   {activities}: ${activities},
-//   {activitiesLength}: ${activitiesLength}`);
+  const strictEmailRegex =
+    /^[a-zA-Z0-9](?:[a-zA-Z0-9._-]*[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
+  const handleEmailChange = (value: string) => {
+    if (value === "" || strictEmailRegex.test(value)) {
+      setEmail(value);
+    }
+  };
+  // console.log(  `{tokenUSDTPrice}: ${tokenUSDTPrice},
+  //   {tokenBNBPrice}: ${tokenBNBPrice},
+  //   {tokensSold}: ${tokensSold},
+  //   {totalTokens}: ${totalTokens},
+  //   {userId}: ${userId},kenUSDTPrice}: 0,
+  //   {userDepositsUSDT}: ${userDepositsUSDT},
+  //   {userDepositsBNB}: ${userDepositsBNB},
+  //   {progress}: ${progress},
+  //   {userEarningsBNB}: ${userEarningsBNB},
+  //   {userEarningsUSDT}: ${userEarningsUSDT},
+  //   {userTokens}: ${userTokens},
+  //   {activities}: ${activities},
+  //   {activitiesLength}: ${activitiesLength}`);
   const calculateTokenAmount = useCallback(
     (inputAmount: string) => {
       const numAmount = parseFloat(inputAmount) || 0;
@@ -82,10 +107,26 @@ export function TokenProgress({
   );
 
   const handlePurchase = async () => {
-    if (!amount) return;
+    // check amount
+    if (!amount) {
+      toast.error("Please enter an amount", {
+        duration: 3000,
+        position: "top-right",
+      });
+      return;
+    }
+
+    // check email
+    if (!strictEmailRegex.test(email)) {
+      toast.error("Please enter a valid email address", {
+        duration: 3000,
+        position: "top-right",
+      });
+      return;
+    }
 
     if (selectedToken === "USDT") {
-      await buyWithUSDT(amount);
+      await buyWithUSDT(amount, email);
     } else if (selectedToken === "BNB") {
       await buyWithBNB(amount);
     }
@@ -95,7 +136,9 @@ export function TokenProgress({
     <div className="space-y-6 backdrop-blur-xl bg-input rounded-3xl p-6 md:p-8 overflow-x-auto">
       <div className="flex md:flex-row justify-between md:justify-between items-centers md:items-center gap-4">
         <div className="flex items-start gap-2 flex-col">
-          <span className="py-1 px-3 text-[8px] md:text-sm glass-card">Current price</span>
+          <span className="py-1 px-3 text-[8px] md:text-sm glass-card">
+            Current price
+          </span>
           <div className="flex items-center justify-center gap-1">
             <Image
               src="/images/icon.png"
@@ -104,13 +147,11 @@ export function TokenProgress({
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
             />
-            <span className="text-gray-200 md:text-sm text-[8px]">1 DERBY =</span>
+            <span className="text-gray-200 md:text-sm text-[8px]">
+              1 DERBY =
+            </span>
             <div className="flex items-center gap-2">
-              <img
-                src="/images/tether.svg"
-                alt="USDT"
-                className="w-5 h-5"
-              />
+              <img src="/images/tether.svg" alt="USDT" className="w-5 h-5" />
               <span className="text-[#F0B90B] md:text-sm text-[8px] font-semibold">
                 {formatCurrency(tokenUSDTPrice, 3)} USDT
               </span>
@@ -118,7 +159,9 @@ export function TokenProgress({
           </div>
         </div>
         <div className="flex items-end gap-2 flex-col">
-          <span className="py-1 px-3 glass-card text-[8px] md:text-sm">Next price</span>
+          <span className="py-1 px-3 glass-card text-[8px] md:text-sm">
+            Next price
+          </span>
           <div className="flex items-center justify-center gap-1">
             <Image
               src="/images/icon.png"
@@ -127,7 +170,9 @@ export function TokenProgress({
               height={12}
               className="md:w-5 md:h-5 w-3 h-3"
             />
-            <span className="text-gray-200 md:text-sm text-[8px]">1 DERBY =</span>
+            <span className="text-gray-200 md:text-sm text-[8px]">
+              1 DERBY =
+            </span>
             <div className="flex items-center gap-2">
               <img
                 src="/images/tether.svg"
@@ -140,7 +185,6 @@ export function TokenProgress({
             </div>
           </div>
         </div>
-
       </div>
 
       <Progress
@@ -152,11 +196,12 @@ export function TokenProgress({
       />
 
       <div className="pt-10 p-1 md:p-8">
-        <h2 className="text-sm md:text-xl mb-8 text-white ">Step 1 - <span className=" text-gray-400">
-          Select the Payment Method (BEP20)
-        </span> </h2>
+        <h2 className="text-sm md:text-xl mb-8 text-white ">
+          Step 1 -{" "}
+          <span className=" text-gray-400">Enter your email address</span>{" "}
+        </h2>
 
-        <div className="flex w-full md:w-[40%] mx-auto items-center justify-center p-1 bg-card glass-card gap-4 mb-8">
+        {/* <div className="flex w-full md:w-[40%] mx-auto items-center justify-center p-1 bg-card glass-card gap-4 mb-8">
           {Object.entries(SUPPORTED_TOKENS).map(([symbol, details]) => (
             <Button
               key={symbol}
@@ -169,11 +214,22 @@ export function TokenProgress({
               {symbol}
             </Button>
           ))}
+        </div> */}
+        <div className="flex w-full md:w-[40%] mx-auto items-center justify-center p-1 bg-card glass-card gap-4 mb-8 py-4">
+          <input
+            className="bg-transparent text-center w-full focus:outline-none"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
 
-        <h2 className="text-sm md:text-xl mb-8 text-white ">Step 2 - <span className=" text-gray-400">
-          Enter the Amount of Token You Would Like to Purchase
-        </span> </h2>
+        <h2 className="text-sm md:text-xl mb-8 text-white ">
+          Step 2 -{" "}
+          <span className=" text-gray-400">
+            Enter the Amount of Token You Would Like to Purchase
+          </span>{" "}
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4">
           <AmountInput
@@ -194,7 +250,13 @@ export function TokenProgress({
         <PurchaseButton
           status={status}
           onClick={handlePurchase}
-          disabled={!amount || parseFloat(amount) <= 0 || status == "APPROVING"|| status == "APPROVED" ||status == "PURCHASING" }
+          disabled={
+            !amount ||
+            parseFloat(amount) <= 0 ||
+            status == "APPROVING" ||
+            status == "APPROVED" ||
+            status == "PURCHASING"
+          }
         />
       </div>
 
@@ -204,7 +266,9 @@ export function TokenProgress({
           onClick={() => setShowActivities(!showActivities)}
           className="w-full flex items-center justify-between text-left hover:bg-[#F0B90B]/50 hover:text-white"
         >
-          <span className="text-lg font-medium">Recent Activities & Referrals</span>
+          <span className="text-lg font-medium">
+            Recent Activities & Referrals
+          </span>
           {showActivities ? (
             <ChevronUp className="w-5 h-5" />
           ) : (
@@ -216,21 +280,42 @@ export function TokenProgress({
           <div className="mt-6 space-y-6">
             <ReferralStats
               referralLink={"https://derby.org/?ref=" + userId}
-              usdtprice={(tokenUSDTPrice*b2f(userTokens)).toFixed(2)}
+              usdtprice={(tokenUSDTPrice * b2f(userTokens)).toFixed(2)}
               totalEarningsUSDT={b2f(userEarningsUSDT).toFixed(2)}
               totalEarningsucc={b2f(userTokens).toFixed(2)}
               userVirtualToken={b2f(userVirtualToken).toFixed(2)}
               totalEarningsBNB={b2f(userEarningsBNB).toFixed(2)}
               totalDepositBNB={b2f(userDepositsBNB).toFixed(2)}
               totalDepositUSDT={b2f(userDepositsUSDT).toFixed(2)}
-
+              userTeamStats={userTeamStats}
             />
 
             <div>
               <h3 className="text-lg font-medium mb-4">Recent Activities</h3>
-              <ActivitiesTable activities={activities} length={activitiesLength} />
+              <ActivitiesTable
+                activities={activities}
+                length={activitiesLength}
+              />
             </div>
           </div>
+        )}
+
+        <Button
+          variant="secondary"
+          onClick={() => setShowLevels(!showLevels)}
+          className="w-full flex items-center justify-between hover:bg-[#F0B90B]/50 hover:text-white text-center"
+        >
+          <span className="text-lg font-medium">
+            {showLevels ? "Level Details" : "View Level"}
+          </span>
+          {showLevels ? (
+            <ChevronUp className="w-5 h-5" />
+          ) : (
+            <ChevronDown className="w-5 h-5" />
+          )}
+        </Button>
+        {showLevels && (
+          <LevelDetailsAccordion userLevels={userLevels} showLevels={showLevels} getLevelDetails={getLevelDetails} userId={userId} />
         )}
       </div>
     </div>

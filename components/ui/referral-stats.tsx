@@ -13,6 +13,7 @@ interface ReferralStatsProps {
   totalDepositBNB: string;
   totalDepositUSDT: string;
   usdtprice: string;
+  userTeamStats: any;
 }
 
 export function ReferralStats({
@@ -24,6 +25,7 @@ export function ReferralStats({
   totalDepositBNB,
   totalDepositUSDT,
   totalEarningsBNB,
+  userTeamStats,
 }: ReferralStatsProps) {
   const { toast } = useToast();
   const [copiedMessage, setCopiedMessage] = useState(false);
@@ -58,8 +60,8 @@ export function ReferralStats({
           <div className="text-2xl font-bold text-[#F0B90B]">{totalDepositUSDT}</div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-          <div className="text-sm text-gray-400 mb-1">Total Deposit (BNB)</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalDepositBNB}</div>
+          <div className="text-sm text-gray-400 mb-1">Total Team Business</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">{userTeamStats.totalTeamBusiness}</div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-4">
@@ -68,16 +70,26 @@ export function ReferralStats({
           <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsUSDT}</div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-          <div className="text-sm text-gray-400 mb-1">Total Earnings (BNB)</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsBNB}</div>
+          <div className="text-sm text-gray-400 mb-1">Total Team</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">{userTeamStats.totalTeamCount}</div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-          <div className="text-sm text-gray-400 mb-1">Total Earnings (DERBY)</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsucc} (${usdtprice})</div>
+          <div className="text-sm text-gray-400 mb-1">Ceiling Limit</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">${userTeamStats.ceilingLimit}</div>
+        </div>
+        <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
+          <div className="text-sm text-gray-400 mb-1">Derby Tokens</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsucc}</div>
         </div>
       </div>
+      {/* <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
+          <div className="text-sm text-gray-400 mb-1">Available Income</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsucc}</div>
+        </div>
+      </div> */}
 
       {/* Referral Link */}
       <div className="relative">
@@ -112,7 +124,7 @@ export function ReferralStats({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-            <div className="text-sm text-gray-400 mb-1">Coins allocated (DERBY)</div>
+            <div className="text-sm text-gray-50 font-bold mb-1">Available Income</div>
             <div className="text-2xl font-bold text-primary">{userVirtualToken}</div>
           </div>
         </div>

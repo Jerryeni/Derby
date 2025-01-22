@@ -4,7 +4,7 @@ import { ADDRESSES } from '@/lib/contracts/addresses';
 import { PRESALE_ABI, ERC20_ABI } from '@/lib/contracts/abis';
 import { getWeb3Provider } from '@/lib/web3/provider';
 import { toast } from '@/components/ui/use-toast';
-import { UCCInfo, UserUCCInfo } from '@/lib/types';
+import { UCCInfo, UserLevelDetail, UserUCCInfo } from '@/lib/types';
 import { connect, getAccount, readContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 import { injected } from '@wagmi/connectors';
 import { config } from '@/lib/config';
@@ -27,9 +27,12 @@ export function usePresale() {
   const [uccInfo, setUCCInfo] = useState<UCCInfo>({
     totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0
   });
+  const [userId, setUserId] = useState<number>(0);
 
   const [userUCCInfo, setUserUCCInfo] = useState<UserUCCInfo>({
-    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0
+    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, userTeamStats: {
+      totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
+    }, userLevels: []
   });
 
   async function initWallet() {
@@ -44,7 +47,20 @@ export function usePresale() {
       console.error("Error initializing wallet:", error);
     }
   }
-
+async function getLevelDetails(userId: number, level: number): Promise<UserLevelDetail[]> {
+    try {
+      const details = await readContract(config, {
+        abi: PRESALE_ABI,
+        address: ADDRESSES.PRESALE,
+        functionName: 'getUserLevelDetails',
+        args: [userId, level],
+      });
+      return details as UserLevelDetail[];
+    } catch (error) {
+      console.error("Error fetching level details:", error);
+      return [];
+    }
+  }
   // async function initWallet() {
   //   try {
   //     // const result = await connect(config, { connector: injected() })
@@ -69,7 +85,7 @@ export function usePresale() {
 
   // };
 
-  const buyWithUSDT = async (amount: string) => {
+  const buyWithUSDT = async (amount: string, email: string) => {
     try {
       // Approve USDT
       const account = getAccount(config)
@@ -112,7 +128,8 @@ export function usePresale() {
         args: [
           _userAddress,
           ref, // ref
-          parsedAmount
+          parsedAmount,
+          email
         ],
         // value: parsedAmount
       })
@@ -326,12 +343,14 @@ export function usePresale() {
         functionName: 'id',
         args: [ua]
       });
+      console.log({ userId });
       const usersInfo = await readContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
         functionName: 'usersInfo',
         args: [userId]
       });
+      console.log({ usersInfo });
 
       let activityLength: any = 0;
       let recentActivities: any = [];
@@ -355,18 +374,40 @@ export function usePresale() {
         functionName: 'usersVirtualToken',
         args: [userId],
       }) || 0;
-      console.log({ usersVirtualToken });
+      const userTeamStats: any = await readContract(config, {
+        abi: PRESALE_ABI,
+        address: ADDRESSES.PRESALE,
+        functionName: 'getUserTeamStats',
+        args: [userId],
+      });
+      console.log({ usersVirtualToken, userTeamStats });
+      const userLevels: any = await readContract(config, {
+        abi: PRESALE_ABI,
+        address: ADDRESSES.PRESALE,
+        functionName: 'getAllLevelDetails',
+        args: [userId],
+      });
+      console.log({ userLevels });
       return {
         userId: userId,
         usersInfo: userId === 0 ? null : usersInfo,
         recentActivities,
         activityLength: parseInt(activityLength.toString()),
-        usersVirtualToken: usersVirtualToken
+        usersVirtualToken: usersVirtualToken,
+        userLevels,
+        userTeamStats: {
+          totalTeamBusiness: b2i(userTeamStats[0]),
+          totalTeamCount: b2i(userTeamStats[1]),
+          ceilingLimit: b2f(userTeamStats[2]),
+        }
       };
     } catch (error: any) {
       console.error("Error fetching user info:", error);
       return {
-        userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0
+        userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, userTeamStats: {
+          totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
+        },
+        userLevels: []
       };
     }
   }
@@ -386,6 +427,7 @@ export function usePresale() {
     setCurPage,
     resetStatus,
     initWallet,
+    getLevelDetails
   };
 }
 

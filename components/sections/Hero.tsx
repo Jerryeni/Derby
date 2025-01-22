@@ -12,17 +12,18 @@ interface PhaseIndicatorProps {
   totalPhases: number;
 }
 
-const PhaseIndicator: React.FC<PhaseIndicatorProps> = ({ currentPhase, totalPhases }) => {
+const PhaseIndicator: React.FC<PhaseIndicatorProps> = ({
+  currentPhase,
+  totalPhases,
+}) => {
   return (
     <h1 className="relative md:text-5xl text-3xl font-bold mb-2 w-fit mx-auto text-white bg-clip-text text-transparent backdrop-blur-lg shadow-inner">
-    <span className="absolute inset-0 shadow-inner bg-white/30 blur-lg"></span>
-    <span className="relative z-10">
-      Derby Phase {currentPhase}
-      <sup className="text-sm align-super text-gray-400">/{totalPhases}</sup>
-    </span>
+      <span className="absolute inset-0 shadow-inner bg-white/30 blur-lg"></span>
+      <span className="relative z-10">
+        Derby Phase {currentPhase}
+        <sup className="text-sm align-super text-gray-400">/{totalPhases}</sup>
+      </span>
     </h1>
-
-
   );
 };
 
@@ -34,7 +35,7 @@ export default function Hero() {
     seconds: 44,
   });
 
-  const { uccInfo, userUCCInfo, totalTokens } = usePresale();
+  const { uccInfo, userUCCInfo, totalTokens, getLevelDetails } = usePresale();
 
   useEffect(() => {
     const targetDate = new Date("2024-12-31T00:00:00");
@@ -60,9 +61,12 @@ export default function Hero() {
         <p className="md:text-md text-xs text-gray-400 mb-12">ENDS IN</p>
 
         <CountdownTimer targetDate={new Date("2025-02-04")} />
-
         {/* Stats Bar */}
-        <div className="w-full mt-24 max-w-4xl mx-auto backdrop-blur-xl bg-black/40 rounded-3xl border border-[#F0B90B]/20 overflow-hidden">
+        <div className="mt-24 mb-4 font-bold text-red-600 uppercase">
+          <span>welcome</span>{" "}
+          {userUCCInfo?.usersInfo ? userUCCInfo.usersInfo[12] : "new user"}
+        </div>
+        <div className="w-full  max-w-4xl mx-auto backdrop-blur-xl bg-black/40 rounded-3xl border border-[#F0B90B]/20 overflow-hidden">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F0B90B]/10 rounded-full blur-3xl" />
 
           <div className="grid grid-cols-3 p-6">
@@ -84,9 +88,7 @@ export default function Hero() {
               <div className="text-xs md:text-sm text-gray-400 mb-">
                 LISTING DATE
               </div>
-              <div className="text-xs md:text-xl font-bold">
-                Announced soon
-              </div>
+              <div className="text-xs md:text-xl font-bold">Announced soon</div>
             </div>
             <div className="text-right">
               <div className="text-xs md:text-sm text-gray-400 mb-1">
@@ -110,6 +112,7 @@ export default function Hero() {
               userVirtualToken={userUCCInfo.usersVirtualToken}
               userId={userUCCInfo.userId}
               userTokens={userUCCInfo.usersInfo?.[7] ?? 0}
+              userLevels={userUCCInfo.userLevels}
               progress={
                 uccInfo.totalTokensToBEDistributed &&
                 (uccInfo.totalTokensToBEDistributed * 100) / 10000000
@@ -118,6 +121,8 @@ export default function Hero() {
               totalTokens={10000000}
               activities={userUCCInfo.recentActivities}
               activitiesLength={userUCCInfo.activityLength}
+              userTeamStats={userUCCInfo.userTeamStats}
+              getLevelDetails={getLevelDetails}
             />
             {}
           </div>

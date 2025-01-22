@@ -126,4 +126,13 @@ export type UserUCCInfo = {
   recentActivities: any[];
   activityLength: any;
   usersVirtualToken: any;
+  userLevels: any[];
+  userTeamStats: {
+    totalTeamBusiness: number;
+    totalTeamCount: number;
+    ceilingLimit: number;
+  };
+}
+export type UserLevelDetail = {
+  level: number;
 }
