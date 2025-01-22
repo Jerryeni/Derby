@@ -134,5 +134,6 @@ export type UserUCCInfo = {
   };
 }
 export type UserLevelDetail = {
-  level: number;
+  userId: BigInt;
+  amountEarned: BigInt;
 }

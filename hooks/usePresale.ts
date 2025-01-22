@@ -47,7 +47,7 @@ export function usePresale() {
       console.error("Error initializing wallet:", error);
     }
   }
-async function getLevelDetails(userId: number, level: number): Promise<UserLevelDetail[]> {
+  async function getLevelDetails(userId: number, level: number): Promise<UserLevelDetail[]> {
     try {
       const details = await readContract(config, {
         abi: PRESALE_ABI,
@@ -354,6 +354,11 @@ async function getLevelDetails(userId: number, level: number): Promise<UserLevel
 
       let activityLength: any = 0;
       let recentActivities: any = [];
+      let usersVirtualToken: any = 0;
+      let userLevels: any = [];
+      let userTeamStats: any = {
+        totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
+      };
       if (parseInt(userId?.toString()) !== 0) {
         activityLength = await readContract(config, {
           abi: PRESALE_ABI,
@@ -367,27 +372,28 @@ async function getLevelDetails(userId: number, level: number): Promise<UserLevel
           functionName: 'getRecentActivities',
           args: [userId, cpage]
         });
+        console.log({ recentActivities })
+        usersVirtualToken = await readContract(config, {
+          abi: PRESALE_ABI,
+          address: ADDRESSES.PRESALE,
+          functionName: 'usersVirtualToken',
+          args: [userId],
+        }) || 0;
+        userTeamStats = await readContract(config, {
+          abi: PRESALE_ABI,
+          address: ADDRESSES.PRESALE,
+          functionName: 'getUserTeamStats',
+          args: [userId],
+        });
+        console.log({ usersVirtualToken, userTeamStats });
+        userLevels = await readContract(config, {
+          abi: PRESALE_ABI,
+          address: ADDRESSES.PRESALE,
+          functionName: 'getAllLevelDetails',
+          args: [userId],
+        });
+        console.log({ userLevels });
       }
-      const usersVirtualToken = await readContract(config, {
-        abi: PRESALE_ABI,
-        address: ADDRESSES.PRESALE,
-        functionName: 'usersVirtualToken',
-        args: [userId],
-      }) || 0;
-      const userTeamStats: any = await readContract(config, {
-        abi: PRESALE_ABI,
-        address: ADDRESSES.PRESALE,
-        functionName: 'getUserTeamStats',
-        args: [userId],
-      });
-      console.log({ usersVirtualToken, userTeamStats });
-      const userLevels: any = await readContract(config, {
-        abi: PRESALE_ABI,
-        address: ADDRESSES.PRESALE,
-        functionName: 'getAllLevelDetails',
-        args: [userId],
-      });
-      console.log({ userLevels });
       return {
         userId: userId,
         usersInfo: userId === 0 ? null : usersInfo,

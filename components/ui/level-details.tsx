@@ -70,6 +70,7 @@ export function LevelDetailsAccordion({
             value={levelId}
             key={index}
             onClick={() => handleLevelClick(levelId, level)}
+            className="flex flex-col gap-2 px-3 "
           >
             <AccordionTrigger>
               <div className="flex items-center space-x-2">
@@ -85,7 +86,7 @@ export function LevelDetailsAccordion({
                 {b2f(level.totalAmount)} USDT
               </div>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="px-5 font-bold">
               {Number(level.userCount) === 0 ? (
                 <div className="text-sm text-gray-500">
                   No users in this level
@@ -95,9 +96,10 @@ export function LevelDetailsAccordion({
               ) : levelDetailsCache[levelId] ? (
                 <div className="space-y-2">
                   {levelDetailsCache[levelId].map((detail, detailIndex) => (
-                    <div key={detailIndex} className="text-sm">
-                      {/* Render your detail data here */}
-                      {JSON.stringify(detail)}
+                    <div key={detailIndex} className="text-sm flex gap-2 border-b border-gray-400 py-2">
+                        <span>{detailIndex+1}.</span>
+                        <span className="">User-{Number(detail.userId)}</span>
+                        <span className="">{b2f(detail.amountEarned)} $USDT</span>
                     </div>
                   ))}
                 </div>
