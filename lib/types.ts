@@ -136,7 +136,9 @@ export type UserUCCInfo = {
 export type UserLevelDetail = {
   userId: BigInt;
   amountEarned: BigInt;
-}
+  userEmail: string;
+  userAddress: string;
+};
 
 export interface UserIncomes {
   currentRefIncomeUSDT: number;
