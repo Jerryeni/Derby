@@ -265,6 +265,7 @@ export function usePresale() {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
         functionName: 'claimVirtualTokens',
+        args: [false],// false - isBNB
       });
 
       toast.success("Virtual tokens claimed successfully!", {

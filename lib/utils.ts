@@ -29,7 +29,7 @@ export function formatCurrency(value: number, decimals: number = 2): string {
 }
 
 export function shortenAddress(address: string): string {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  return address.length > 10 ? `${address.slice(0, 4)}...${address.slice(-4)}` : address;
 }
 
 export function formatDate(date: Date): string {
