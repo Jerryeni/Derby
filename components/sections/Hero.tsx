@@ -123,6 +123,7 @@ export default function Hero() {
               activitiesLength={userUCCInfo.activityLength}
               userTeamStats={userUCCInfo.userTeamStats}
               getLevelDetails={getLevelDetails}
+              userIncomes={userUCCInfo.incomes}
             />
             {}
           </div>

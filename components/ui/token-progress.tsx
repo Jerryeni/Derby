@@ -14,7 +14,7 @@ import { ActivitiesTable, Activity } from "@/components/ui/activities-table";
 import { b2f, b2i, usePresale, } from "@/hooks/usePresale";
 import { toast } from "@/components/ui/use-toast";
 import { LevelDetailsAccordion } from "./level-details";
-import { UserLevelDetail } from "@/lib/types";
+import { UserIncomes, UserLevelDetail } from "@/lib/types";
 interface TokenProgressProps {
   tokenUSDTPrice: number;
   tokenBNBPrice: number;
@@ -41,6 +41,7 @@ interface TokenProgressProps {
     userId: number,
     level: number
   ) => Promise<UserLevelDetail[]>;
+  userIncomes: UserIncomes;
 }
 
 
@@ -51,6 +52,7 @@ export function TokenProgress({
   totalTokens,
   userVirtualToken,
   userId,
+  userInfo,
   userDepositsUSDT,
   userDepositsBNB,
   progress,
@@ -61,7 +63,8 @@ export function TokenProgress({
   activitiesLength,
   userTeamStats,
   userLevels,
-  getLevelDetails
+  getLevelDetails,
+  userIncomes
 }: TokenProgressProps) {
   // const progress = (tokensSold / totalTokens) * 100;
   const [selectedToken, setSelectedToken] = useState("USDT");
@@ -83,6 +86,7 @@ export function TokenProgress({
       setEmail(value);
     }
   };
+  // console.log({userInfo});
   // console.log(  `{tokenUSDTPrice}: ${tokenUSDTPrice},
   //   {tokenBNBPrice}: ${tokenBNBPrice},
   //   {tokensSold}: ${tokensSold},
@@ -279,7 +283,8 @@ export function TokenProgress({
         {showActivities && (
           <div className="mt-6 space-y-6">
             <ReferralStats
-              referralLink={"https://derby.org/?ref=" + userId}
+              // referralLink={"https://derby.org/?ref=" + userId}
+              referralLink={`${window.location.origin}?ref=${userId}`}
               usdtprice={(tokenUSDTPrice * b2f(userTokens)).toFixed(2)}
               totalEarningsUSDT={b2f(userEarningsUSDT).toFixed(2)}
               totalEarningsucc={b2f(userTokens).toFixed(2)}
@@ -288,6 +293,8 @@ export function TokenProgress({
               totalDepositBNB={b2f(userDepositsBNB).toFixed(2)}
               totalDepositUSDT={b2f(userDepositsUSDT).toFixed(2)}
               userTeamStats={userTeamStats}
+              userInfo={userInfo}
+              userIncomes={userIncomes}
             />
 
             <div>

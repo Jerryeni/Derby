@@ -4,7 +4,7 @@ import { ADDRESSES } from '@/lib/contracts/addresses';
 import { PRESALE_ABI, ERC20_ABI } from '@/lib/contracts/abis';
 import { getWeb3Provider } from '@/lib/web3/provider';
 import { toast } from '@/components/ui/use-toast';
-import { UCCInfo, UserLevelDetail, UserUCCInfo } from '@/lib/types';
+import { UCCInfo, UserIncomes, UserLevelDetail, UserUCCInfo } from '@/lib/types';
 import { connect, getAccount, readContract, waitForTransactionReceipt, writeContract } from '@wagmi/core';
 import { injected } from '@wagmi/connectors';
 import { config } from '@/lib/config';
@@ -28,12 +28,12 @@ export function usePresale() {
     totalInvestmentsUSDT: 0, totalInvestmentsBNB: 0, totalUsers: 0, priceUSDT: 0, priceBNB: 0, totalTokensToBEDistributed: 0
   });
   const [userId, setUserId] = useState<number>(0);
-
-  const [userUCCInfo, setUserUCCInfo] = useState<UserUCCInfo>({
-    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, userTeamStats: {
-      totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
+  const defaultUserUccInfo: UserUCCInfo = {
+    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, incomes: { currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, ceilingLimit: 0 }, userTeamStats: {
+      totalTeamBusiness: 0, totalTeamCount: 0
     }, userLevels: []
-  });
+  };
+  const [userUCCInfo, setUserUCCInfo] = useState<UserUCCInfo>({ ...defaultUserUccInfo });
 
   async function initWallet() {
     try {
@@ -359,6 +359,9 @@ export function usePresale() {
       let userTeamStats: any = {
         totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
       };
+      let userIncomes: UserIncomes = {
+        currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, ceilingLimit: 0
+      }
       if (parseInt(userId?.toString()) !== 0) {
         activityLength = await readContract(config, {
           abi: PRESALE_ABI,
@@ -393,6 +396,18 @@ export function usePresale() {
           args: [userId],
         });
         console.log({ userLevels });
+        const userIncomeRaw: any = await readContract(config, {
+          abi: PRESALE_ABI,
+          address: ADDRESSES.PRESALE,
+          functionName: 'usersIncome',
+          args: [userId],
+        });
+        console.log({ userIncomeRaw });
+        userIncomes = {
+          currentRefIncomeUSDT: b2f(userIncomeRaw[0]),
+          currentRefIncomeBNB: b2f(userIncomeRaw[1]),
+          ceilingLimit: b2f(userIncomeRaw[2])
+        }
       }
       return {
         userId: userId,
@@ -401,20 +416,15 @@ export function usePresale() {
         activityLength: parseInt(activityLength.toString()),
         usersVirtualToken: usersVirtualToken,
         userLevels,
+        incomes: userIncomes,
         userTeamStats: {
-          totalTeamBusiness: b2i(userTeamStats[0]),
-          totalTeamCount: b2i(userTeamStats[1]),
-          ceilingLimit: b2f(userTeamStats[2]),
+          totalTeamBusiness: b2i(userTeamStats[0] ?? 0),
+          totalTeamCount: Number(userTeamStats[1] ?? 0),
         }
       };
     } catch (error: any) {
       console.error("Error fetching user info:", error);
-      return {
-        userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, userTeamStats: {
-          totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
-        },
-        userLevels: []
-      };
+      return { ...defaultUserUccInfo };
     }
   }
 

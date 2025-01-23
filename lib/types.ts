@@ -130,10 +130,16 @@ export type UserUCCInfo = {
   userTeamStats: {
     totalTeamBusiness: number;
     totalTeamCount: number;
-    ceilingLimit: number;
   };
+  incomes: UserIncomes;
 }
 export type UserLevelDetail = {
   userId: BigInt;
   amountEarned: BigInt;
+}
+
+export interface UserIncomes {
+  currentRefIncomeUSDT: number;
+  currentRefIncomeBNB: number;
+  ceilingLimit: number;
 }

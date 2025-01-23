@@ -2,7 +2,8 @@ import { Copy, Loader } from "lucide-react"; // Add Loader icon
 import { Button } from "./button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { usePresale, PurchaseStatus } from "@/hooks/usePresale";
+import { usePresale, PurchaseStatus, b2f } from "@/hooks/usePresale";
+import { UserIncomes } from "@/lib/types";
 
 interface ReferralStatsProps {
   referralLink: string;
@@ -14,6 +15,8 @@ interface ReferralStatsProps {
   totalDepositUSDT: string;
   usdtprice: string;
   userTeamStats: any;
+  userInfo: any;
+  userIncomes: UserIncomes;
 }
 
 export function ReferralStats({
@@ -26,6 +29,8 @@ export function ReferralStats({
   totalDepositUSDT,
   totalEarningsBNB,
   userTeamStats,
+  userIncomes,
+  userInfo = [],
 }: ReferralStatsProps) {
   const { toast } = useToast();
   const [copiedMessage, setCopiedMessage] = useState(false);
@@ -57,31 +62,45 @@ export function ReferralStats({
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
           <div className="text-sm text-gray-400 mb-1">Total Deposit (USDT)</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalDepositUSDT}</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            {totalDepositUSDT}
+          </div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
           <div className="text-sm text-gray-400 mb-1">Total Team Business</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{userTeamStats.totalTeamBusiness}</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            {userTeamStats.totalTeamBusiness}
+          </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-          <div className="text-sm text-gray-400 mb-1">Total Earnings (USDT)</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsUSDT}</div>
+          <div className="text-sm text-gray-400 mb-1">
+            Total Earnings (USDT)
+          </div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            {totalEarningsUSDT}
+          </div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
           <div className="text-sm text-gray-400 mb-1">Total Team</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{userTeamStats.totalTeamCount}</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            {userTeamStats.totalTeamCount}
+          </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
           <div className="text-sm text-gray-400 mb-1">Ceiling Limit</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">${userTeamStats.ceilingLimit}</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            ${userIncomes.ceilingLimit}
+          </div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
           <div className="text-sm text-gray-400 mb-1">Derby Tokens</div>
-          <div className="text-2xl font-bold text-[#F0B90B]">{totalEarningsucc}</div>
+          <div className="text-2xl font-bold text-[#F0B90B]">
+            {totalEarningsucc}
+          </div>
         </div>
       </div>
       {/* <div className="flex flex-col md:flex-row gap-4">
@@ -124,8 +143,12 @@ export function ReferralStats({
       <div className="flex flex-col gap-4">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
-            <div className="text-sm text-gray-50 font-bold mb-1">Available Income</div>
-            <div className="text-2xl font-bold text-primary">{userVirtualToken}</div>
+            <div className="text-sm text-gray-50 font-bold mb-1">
+              Available Income
+            </div>
+            <div className="text-2xl font-bold text-primary">
+              {userIncomes.currentRefIncomeUSDT} USDT
+            </div>
           </div>
         </div>
         <Button
