@@ -134,12 +134,6 @@ export function TokenProgress({
       await buyWithBNB(amount);
     }
   };
-  useEffect(() => {
-    console.log({ userInfo });
-    if (userInfo?.email) {
-      setEmail(userInfo?.email);
-    }
-  }, [userInfo]);
 
   return (
     <div className="space-y-6 backdrop-blur-xl bg-input rounded-3xl p-6 md:p-8 overflow-x-auto">
