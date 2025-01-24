@@ -2,7 +2,7 @@
 
 import { Progress } from "@/components/ui/progress";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { SUPPORTED_TOKENS } from "@/lib/constants";
@@ -11,7 +11,7 @@ import { AmountInput } from "./amount-input";
 import { PurchaseButton } from "./purchase-button";
 import { ReferralStats } from "./referral-stats";
 import { ActivitiesTable, Activity } from "@/components/ui/activities-table";
-import { b2f, b2i, usePresale, } from "@/hooks/usePresale";
+import { b2f, b2i, usePresale } from "@/hooks/usePresale";
 import { toast } from "@/components/ui/use-toast";
 import { LevelDetailsAccordion } from "./level-details";
 import { UserIncomes, UserLevelDetail } from "@/lib/types";
@@ -44,7 +44,6 @@ interface TokenProgressProps {
   userIncomes: UserIncomes;
 }
 
-
 export function TokenProgress({
   tokenUSDTPrice,
   tokenBNBPrice,
@@ -64,12 +63,12 @@ export function TokenProgress({
   userTeamStats,
   userLevels,
   getLevelDetails,
-  userIncomes
+  userIncomes,
 }: TokenProgressProps) {
   // const progress = (tokensSold / totalTokens) * 100;
   const [selectedToken, setSelectedToken] = useState("USDT");
   const [amount, setAmount] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(userInfo ? userInfo[12] : "" || "");
   const { status, buyWithUSDT, buyWithBNB } = usePresale();
   const [showActivities, setShowActivities] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
@@ -135,6 +134,12 @@ export function TokenProgress({
       await buyWithBNB(amount);
     }
   };
+  useEffect(() => {
+    console.log({ userInfo });
+    if (userInfo?.email) {
+      setEmail(userInfo?.email);
+    }
+  }, [userInfo]);
 
   return (
     <div className="space-y-6 backdrop-blur-xl bg-input rounded-3xl p-6 md:p-8 overflow-x-auto">
@@ -225,6 +230,7 @@ export function TokenProgress({
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            readOnly={userInfo && userInfo[12] !== ""}
           />
         </div>
 
@@ -322,7 +328,12 @@ export function TokenProgress({
           )}
         </Button>
         {showLevels && (
-          <LevelDetailsAccordion userLevels={userLevels} showLevels={showLevels} getLevelDetails={getLevelDetails} userId={userId} />
+          <LevelDetailsAccordion
+            userLevels={userLevels}
+            showLevels={showLevels}
+            getLevelDetails={getLevelDetails}
+            userId={userId}
+          />
         )}
       </div>
     </div>
