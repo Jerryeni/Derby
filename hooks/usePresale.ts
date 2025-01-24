@@ -156,6 +156,7 @@ export function usePresale() {
           }
         );
         setStatus(PurchaseStatus.IDLE);
+        window.location.reload();
       })
 
 
@@ -215,6 +216,7 @@ export function usePresale() {
           }
         );
         setStatus(PurchaseStatus.IDLE);
+        window.location.reload();
       })
 
 
