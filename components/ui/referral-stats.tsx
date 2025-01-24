@@ -94,7 +94,7 @@ export function ReferralStats({
           <div className="text-sm text-gray-400 mb-1">Ceiling Limit</div>
           <div className="text-2xl font-bold text-[#F0B90B]">
             {/* {totalEarningsucc}({userIncomes.ceilingLimit}) */}
-            {userIncomes.ceilingLimit}
+            {userIncomes.ceilingLimit} USDT
           </div>
         </div>
         <div className="flex-1 bg-black/50 rounded-xl p-4 border border-[#F0B90B]/20">
