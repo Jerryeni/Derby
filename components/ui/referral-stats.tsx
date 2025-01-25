@@ -156,7 +156,7 @@ export function ReferralStats({
           size="sm"
           className="bg-primary hover:bg-primary/90 text-black flex items-center justify-center"
           onClick={handleClaim}
-          disabled={status === PurchaseStatus.PURCHASING}
+          disabled={status === PurchaseStatus.PURCHASING || userIncomes.currentRefIncomeUSDT === 0}
         >
           {status === PurchaseStatus.PURCHASING ? (
             <Loader className="w-4 h-4 animate-spin mr-2" />

@@ -376,7 +376,7 @@ export function usePresale() {
           functionName: 'getRecentActivities',
           args: [userId, cpage]
         });
-        console.log({ recentActivities })
+        // console.log({ recentActivities })
         usersVirtualToken = await readContract(config, {
           abi: PRESALE_ABI,
           address: ADDRESSES.PRESALE,
@@ -389,21 +389,21 @@ export function usePresale() {
           functionName: 'getUserTeamStats',
           args: [userId],
         });
-        console.log({ usersVirtualToken, userTeamStats });
+        // console.log({ usersVirtualToken, userTeamStats });
         userLevels = await readContract(config, {
           abi: PRESALE_ABI,
           address: ADDRESSES.PRESALE,
           functionName: 'getAllLevelDetails',
           args: [userId],
         });
-        console.log({ userLevels });
+        // console.log({ userLevels });
         const userIncomeRaw: any = await readContract(config, {
           abi: PRESALE_ABI,
           address: ADDRESSES.PRESALE,
           functionName: 'usersIncome',
           args: [userId],
         });
-        console.log({ userIncomeRaw });
+        // console.log({ userIncomeRaw });
         userIncomes = {
           currentRefIncomeUSDT: b2f(userIncomeRaw[0]),
           currentRefIncomeBNB: b2f(userIncomeRaw[1]),
