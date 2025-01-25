@@ -109,7 +109,7 @@ export function LevelDetailsAccordion({
                         </span>
                         <span>-</span>
                         <span className="">
-                          {b2f(detail.amountEarned)} $USDT
+                          {b2f(detail.userDeposit)} $USDT
                         </span>
                       </div>
                     ))}
