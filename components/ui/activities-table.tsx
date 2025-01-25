@@ -20,6 +20,7 @@ export interface Activity {
   usdtAmt: any;
   bnbAmt: any;
   mode: any;
+  activityLevel: BigInt;
 }
 
 interface ActivitiesTableProps {
@@ -79,7 +80,7 @@ export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
                   {activity.mode == 0
                     ? "Investment"
                     : activity.mode == 1
-                    ? `Referral`
+                    ? `Referral (Level - ${Number(activity.activityLevel)})`
                     : "Dividend"}
                 </span>
               </TableCell>
