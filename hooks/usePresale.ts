@@ -320,7 +320,6 @@ export function usePresale() {
         address: ADDRESSES.PRESALE,
         functionName: 'totalTokensToBEDistributed',
       });
-
       setTotalToken(b2i(totalTokensToBEDistributed));
       return {
         totalInvestmentsUSDT: b2i(totalInvestmentsUSDT),
@@ -328,7 +327,7 @@ export function usePresale() {
         totalUsers,
         priceUSDT: b2f(priceUSDT),
         priceBNB: b2f(priceBNB),
-        totalTokensToBEDistributed: b2i(totalTokensToBEDistributed),
+        totalTokensToBEDistributed: b2i(totalTokensToBEDistributed,9),
       };
     } catch (error: any) {
       console.error("Error fetching DERBY info:", error);
@@ -450,10 +449,10 @@ export function usePresale() {
   };
 }
 
-export function b2i(amt: any): number {
-  return parseInt(formatUnits(amt, 18));
+export function b2i(amt: any, decimals: number = 18): number {
+  return parseInt(formatUnits(amt, decimals));
 }
 
-export function b2f(amt: any): number {
-  return parseFloat(formatUnits(amt, 18));
+export function b2f(amt: any, decimals: number = 18): number {
+  return parseFloat(formatUnits(amt, decimals));
 }

@@ -68,7 +68,7 @@ export function TokenProgress({
   // const progress = (tokensSold / totalTokens) * 100;
   const [selectedToken, setSelectedToken] = useState("USDT");
   const [amount, setAmount] = useState("");
-  const [email, setEmail] = useState(userInfo ? userInfo[12] : "" || "");
+  const [email, setEmail] = useState((userInfo ? userInfo[12] : "") || "");
   const { status, buyWithUSDT, buyWithBNB } = usePresale();
   const [showActivities, setShowActivities] = useState(false);
   const [showLevels, setShowLevels] = useState(false);

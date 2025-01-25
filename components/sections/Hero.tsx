@@ -45,9 +45,9 @@ export default function Hero() {
 
     return () => clearInterval(timer);
   }, []);
-  useEffect(() => {
-    console.log(userUCCInfo);
-  }, [userUCCInfo]);
+  // useEffect(() => {
+  //   console.log({ userUCCInfo, uccInfo });
+  // }, [userUCCInfo, uccInfo]);
   // console.log(userUCCInfo.usersInfo[3])
   return (
     <section className="relative min-h-screen pt-20 flex mb-10 flex-col items-center justify-center overflow-hidden">
@@ -62,9 +62,11 @@ export default function Hero() {
 
         <CountdownTimer targetDate={new Date("2025-02-04")} />
         {/* Stats Bar */}
-        <div className="mt-24 mb-4 font-bold text-red-600 uppercase">
+        <div className="mt-24 mb-4 font-bold text-yellow-600 uppercase">
           <span>welcome</span>{" "}
-          {userUCCInfo?.usersInfo ? userUCCInfo.usersInfo[12] : "new user"}
+          {userUCCInfo?.usersInfo && userUCCInfo.usersInfo[12] !== ""
+            ? userUCCInfo.usersInfo[12]
+            : "new user"}
         </div>
         <div className="w-full  max-w-4xl mx-auto backdrop-blur-xl bg-black/40 rounded-3xl border border-[#F0B90B]/20 overflow-hidden">
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F0B90B]/10 rounded-full blur-3xl" />
