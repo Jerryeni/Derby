@@ -68,7 +68,7 @@ export function TokenProgress({
   // const progress = (tokensSold / totalTokens) * 100;
   const [selectedToken, setSelectedToken] = useState("USDT");
   const [amount, setAmount] = useState("");
-  const [email, setEmail] = useState((userInfo ? userInfo[12] : "") || "");
+  const [email, setEmail] = useState("");
   const { status, buyWithUSDT, buyWithBNB } = usePresale();
   const [showActivities, setShowActivities] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
@@ -78,6 +78,11 @@ export function TokenProgress({
       setAmount(value);
     }
   };
+  useEffect(() => {
+    if (userInfo) {
+      setEmail(userInfo[12]);
+    }
+  }, [userInfo]);
   const strictEmailRegex =
     /^[a-zA-Z0-9](?:[a-zA-Z0-9._-]*[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
   const handleEmailChange = (value: string) => {
