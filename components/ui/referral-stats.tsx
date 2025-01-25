@@ -34,10 +34,10 @@ export function ReferralStats({
 }: ReferralStatsProps) {
   const { toast } = useToast();
   const [copiedMessage, setCopiedMessage] = useState(false);
-  const { claimVirtualTokens, status } = usePresale();
+  const { claimAvailableIcome, status } = usePresale();
 
   const handleClaim = async () => {
-    await claimVirtualTokens();
+    await claimAvailableIcome();
   };
 
   const copyToClipboard = () => {

@@ -233,14 +233,14 @@ export function usePresale() {
     }
   };
 
-  // const claimVirtualTokens = async () => {
+  // const claimAvailableIcome = async () => {
   //   try {
 
   //     // Call the contract function
   //     await writeContract(config, {
   //       abi: PRESALE_ABI,
   //       address: ADDRESSES.PRESALE,
-  //       functionName: 'claimVirtualTokens',
+  //       functionName: 'claimAvailableIcome',
   //     });
 
   //     toast.success("Virtual tokens claimed successfully!", {
@@ -260,14 +260,13 @@ export function usePresale() {
   //   }
   // };
 
-  const claimVirtualTokens = async () => {
+  const claimAvailableIcome = async () => {
     try {
       setStatus(PurchaseStatus.PURCHASING);
       await writeContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
-        functionName: 'claimVirtualTokens',
-        args: [false],// false - isBNB
+        functionName: 'claimAvailableIcome',
       });
 
       toast.success("Virtual tokens claimed successfully!", {
@@ -441,7 +440,7 @@ export function usePresale() {
     curPage,
     buyWithBNB,
     buyWithUSDT,
-    claimVirtualTokens,
+    claimAvailableIcome,
     setCurPage,
     resetStatus,
     initWallet,
