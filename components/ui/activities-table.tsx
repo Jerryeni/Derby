@@ -33,7 +33,8 @@ export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
   const { curPage, setCurPage } = usePresale();
 
   // Calculate total pages
-  const totalPages = Math.ceil(length / rowsPerPage) == 0 ? 1 : Math.ceil(length / rowsPerPage);
+  const totalPages =
+    Math.ceil(length / rowsPerPage) == 0 ? 1 : Math.ceil(length / rowsPerPage);
   // console.log(totalPages, length, activities, " activities");
 
   // Pagination handlers
@@ -90,7 +91,7 @@ export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
                   ? b2f(activity.bnbAmt) == 0
                     ? `${b2f(activity.usdtAmt).toFixed(2)} USDT`
                     : `${b2f(activity.bnbAmt).toFixed(4)} BNB`
-                  : ""}
+                  : `${b2f(activity.tokenAmt, 9).toFixed(2)} DERBY`}
               </TableCell>
             </TableRow>
           ))}

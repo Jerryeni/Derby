@@ -69,6 +69,7 @@ export function TokenProgress({
   const [selectedToken, setSelectedToken] = useState("USDT");
   const [amount, setAmount] = useState("");
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
   const { status, buyWithUSDT, buyWithBNB } = usePresale();
   const [showActivities, setShowActivities] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
@@ -86,8 +87,11 @@ export function TokenProgress({
   const strictEmailRegex =
     /^[a-zA-Z0-9](?:[a-zA-Z0-9._-]*[a-zA-Z0-9])?@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
   const handleEmailChange = (value: string) => {
-    if (value === "" || strictEmailRegex.test(value)) {
-      setEmail(value);
+    setEmail(value);
+    if (!strictEmailRegex.test(value)) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
     }
   };
   // console.log({userInfo});
@@ -223,14 +227,21 @@ export function TokenProgress({
             </Button>
           ))}
         </div> */}
-        <div className="flex w-full md:w-[40%] mx-auto items-center justify-center p-1 bg-card glass-card gap-4 mb-8 py-4">
-          <input
-            className="bg-transparent text-center w-full focus:outline-none"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            readOnly={userInfo && userInfo[12] !== ""}
-          />
+        <div className="mb-8 ">
+          <div className="flex w-full md:w-[40%] mx-auto items-center justify-center p-1 bg-card glass-card gap-4  py-4">
+            <input
+              className="bg-transparent text-center w-full focus:outline-none"
+              type="email"
+              value={email}
+              onChange={(e) => handleEmailChange(e.target.value)}
+              readOnly={userInfo && userInfo[12] !== ""}
+            />
+          </div>
+          {emailError && (
+            <span className="text-red-500 text-xs">
+              Please enter a valid email address
+            </span>
+          )}
         </div>
 
         <h2 className="text-sm md:text-xl mb-8 text-white ">
