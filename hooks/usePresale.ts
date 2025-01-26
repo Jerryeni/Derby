@@ -29,7 +29,7 @@ export function usePresale() {
   });
   const [userId, setUserId] = useState<number>(0);
   const defaultUserUccInfo: UserUCCInfo = {
-    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, incomes: { currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, ceilingLimit: 0 }, userTeamStats: {
+    userId: 0, usersInfo: null, recentActivities: [], activityLength: 0, usersVirtualToken: 0, incomes: { currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, raw: [], ceilingLimit: 0 }, userTeamStats: {
       totalTeamBusiness: 0, totalTeamCount: 0
     }, userLevels: []
   };
@@ -260,23 +260,28 @@ export function usePresale() {
   //   }
   // };
 
-  const claimAvailableIcome = async () => {
+  const claimAvailableIcome = async (userIncomes: UserIncomes) => {
     try {
       setStatus(PurchaseStatus.PURCHASING);
-      await writeContract(config, {
+      console.log(userIncomes.raw, userUCCInfo);
+      const claimTx = await writeContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
         functionName: 'claimAvailableIcome',
+        args: [userIncomes.raw[0]],
       });
-
+      const claimTxTransactionReceipt = waitForTransactionReceipt(config, {
+        hash: claimTx,
+      })
+      await claimTxTransactionReceipt;
       toast.success("Virtual tokens claimed successfully!", {
         duration: 3000,
         position: "top-right",
       });
-
       const updatedUCCInfo = await getUCCInfo();
       setUCCInfo(updatedUCCInfo);
       setStatus(PurchaseStatus.CONFIRMED);
+
     } catch (error: any) {
       console.error("Error claiming virtual tokens:", error);
       toast.error(error.reason || "An error occurred while claiming tokens.", {
@@ -326,7 +331,7 @@ export function usePresale() {
         totalUsers,
         priceUSDT: b2f(priceUSDT),
         priceBNB: b2f(priceBNB),
-        totalTokensToBEDistributed: b2i(totalTokensToBEDistributed,9),
+        totalTokensToBEDistributed: b2i(totalTokensToBEDistributed, 9),
       };
     } catch (error: any) {
       console.error("Error fetching DERBY info:", error);
@@ -361,7 +366,7 @@ export function usePresale() {
         totalTeamBusiness: 0, totalTeamCount: 0, ceilingLimit: 0
       };
       let userIncomes: UserIncomes = {
-        currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, ceilingLimit: 0
+        currentRefIncomeUSDT: 0, currentRefIncomeBNB: 0, ceilingLimit: 0, raw: []
       }
       if (parseInt(userId?.toString()) !== 0) {
         activityLength = await readContract(config, {
@@ -407,7 +412,8 @@ export function usePresale() {
         userIncomes = {
           currentRefIncomeUSDT: b2f(userIncomeRaw[0]),
           currentRefIncomeBNB: b2f(userIncomeRaw[1]),
-          ceilingLimit: b2f(userIncomeRaw[2])
+          ceilingLimit: b2f(userIncomeRaw[2]),
+          raw: userIncomeRaw
         }
       }
       return {

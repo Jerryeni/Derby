@@ -37,7 +37,7 @@ export function ReferralStats({
   const { claimAvailableIcome, status } = usePresale();
 
   const handleClaim = async () => {
-    await claimAvailableIcome();
+    await claimAvailableIcome(userIncomes);
   };
 
   const copyToClipboard = () => {

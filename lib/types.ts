@@ -145,4 +145,5 @@ export interface UserIncomes {
   currentRefIncomeUSDT: number;
   currentRefIncomeBNB: number;
   ceilingLimit: number;
+  raw: any[];
 }
