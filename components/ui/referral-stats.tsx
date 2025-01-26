@@ -37,7 +37,13 @@ export function ReferralStats({
   const { claimAvailableIcome, status } = usePresale();
 
   const handleClaim = async () => {
-    await claimAvailableIcome(userIncomes);
+    try {
+      await claimAvailableIcome(userIncomes);
+      userIncomes.currentRefIncomeUSDT = 0;
+      userIncomes.currentRefIncomeBNB = 0;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const copyToClipboard = () => {
@@ -156,7 +162,10 @@ export function ReferralStats({
           size="sm"
           className="bg-primary hover:bg-primary/90 text-black flex items-center justify-center"
           onClick={handleClaim}
-          disabled={status === PurchaseStatus.PURCHASING || userIncomes.currentRefIncomeUSDT === 0}
+          disabled={
+            status === PurchaseStatus.PURCHASING ||
+            userIncomes.currentRefIncomeUSDT === 0
+          }
         >
           {status === PurchaseStatus.PURCHASING ? (
             <Loader className="w-4 h-4 animate-spin mr-2" />
