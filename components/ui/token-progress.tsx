@@ -303,7 +303,7 @@ export function TokenProgress({
               referralLink={`${window.location.origin}?ref=${userId}`}
               usdtprice={(tokenUSDTPrice * b2f(userTokens)).toFixed(2)}
               totalEarningsUSDT={b2f(userEarningsUSDT).toFixed(2)}
-              totalEarningsucc={b2f(userTokens).toFixed(2)}
+              totalEarningsucc={b2f(userTokens,9).toFixed(4)}
               userVirtualToken={b2f(userVirtualToken).toFixed(2)}
               totalEarningsBNB={b2f(userEarningsBNB).toFixed(2)}
               totalDepositBNB={b2f(userDepositsBNB).toFixed(2)}

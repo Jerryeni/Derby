@@ -37,7 +37,10 @@ export function LevelDetailsAccordion({
   const [levelDetailsCache, setLevelDetailsCache] = useState<LevelDetailsCache>(
     {}
   );
-  const LevelRequiredReferrals = [0,3,3,3,3,7,7,7,7,7,12,12,12,12,12,12,12,12,12,12,12,12]
+  const LevelRequiredReferrals = [
+    0, 3, 3, 3, 3, 7, 7, 7, 7, 7, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12,
+    12,
+  ];
   // Track loading states for each level
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>(
     {}
@@ -94,9 +97,12 @@ export function LevelDetailsAccordion({
                     <div className="text-sm text-gray-500">
                       No users in this level
                     </div>
-                    {true && (<span className="text-sm font-light text-orange-500">
-                    you need minimum {LevelRequiredReferrals[index]} direct referrals earn from this level
-                    </span>)}
+                    {LevelRequiredReferrals[index] > 0 && (
+                      <span className="text-sm font-light text-orange-500">
+                        you need minimum {LevelRequiredReferrals[index]} direct
+                        referrals earn from this level
+                      </span>
+                    )}
                   </div>
                 ) : loadingStates[levelId] ? (
                   <div className="text-sm">Loading...</div>
@@ -111,7 +117,8 @@ export function LevelDetailsAccordion({
                         <span className="">User-{Number(detail.userId)}</span>
                         <span>-</span>
                         <span className="">
-                          {shortenAddress(detail.userEmail)} ({shortenAddress(detail.userAddress)})
+                          {shortenAddress(detail.userEmail)} (
+                          {shortenAddress(detail.userAddress)})
                         </span>
                         <span>-</span>
                         <span className="">
