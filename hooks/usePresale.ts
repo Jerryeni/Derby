@@ -263,12 +263,12 @@ export function usePresale() {
   const claimAvailableIcome = async (userIncomes: UserIncomes) => {
     try {
       setStatus(PurchaseStatus.PURCHASING);
-      console.log(userIncomes.raw, userUCCInfo);
+      // console.log(userIncomes.raw, userUCCInfo);
       const claimTx = await writeContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
-        functionName: 'claimAvailableIcome',
-        args: [userIncomes.raw[0]],
+        functionName: 'claimAllAvailableIcome',
+        // args: [userIncomes.raw[0]],
       });
       const claimTxTransactionReceipt = waitForTransactionReceipt(config, {
         hash: claimTx,
