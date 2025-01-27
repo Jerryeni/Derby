@@ -147,3 +147,19 @@ export interface UserIncomes {
   ceilingLimit: number;
   raw: any[];
 }
+
+export interface User {
+  acct: string;
+  ref: number;
+  id: number;
+  totalDepositUSDT: number;
+  totalDepositBNB: number;
+  refIncomeUSDT: number;
+  refIncomeBNB: number;
+  totalTokens: number;
+  selfTokens: number;
+  refTokens: number;
+  dividendToken: number;
+  refCount: number;
+  email: string;
+}

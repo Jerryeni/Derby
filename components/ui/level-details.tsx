@@ -97,7 +97,7 @@ export function LevelDetailsAccordion({
                     <div className="text-sm text-gray-500">
                       No users in this level
                     </div>
-                    {LevelRequiredReferrals[index] > 0 && (
+                    {LevelRequiredReferrals[index] > Number(level.userCount) && (
                       <span className="text-sm font-light text-orange-500">
                         you need minimum {LevelRequiredReferrals[index]} direct
                         referrals earn from this level
