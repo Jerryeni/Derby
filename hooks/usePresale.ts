@@ -61,29 +61,21 @@ export function usePresale() {
       return [];
     }
   }
-  // async function initWallet() {
-  //   try {
-  //     // const result = await connect(config, { connector: injected() })
-  //     const account = getAccount(config)
 
-  //     // Presale Contract
-  //     // const ps = new ethers.Contract(
-  //     //   ADDRESSES.PRESALE,
-  //     //   PRESALE_ABI,
-  //     //   _signer
-  //     // );
-  //     setUserAddress(account?.address || "");
-  //     // console.log(account?.address || "");
-  //     // console.log(_userAddress);
-  //     const ucci = await getUCCInfo();
-  //     const useri = await getUserInfo(account?.address || "", curPage);
-  //     setUCCInfo(ucci);
-  //     setUserUCCInfo(useri);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-
-  // };
+  async function getRecentActivities(_id: number, _page: number) {
+    try {
+      const activities = await readContract(config, {
+        abi: PRESALE_ABI,
+        address: ADDRESSES.PRESALE,
+        functionName: 'getRecentActivities',
+        args: [_id, _page],
+      });
+      return activities as any[];
+    } catch (error) {
+      console.error("Error fetching recent activities:", error);
+      return [];
+    }
+  }
 
   const buyWithUSDT = async (amount: string, email: string) => {
     try {
@@ -450,7 +442,8 @@ export function usePresale() {
     setCurPage,
     resetStatus,
     initWallet,
-    getLevelDetails
+    getLevelDetails,
+    getRecentActivities
   };
 }
 

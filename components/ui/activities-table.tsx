@@ -12,6 +12,7 @@ import {
 import { formatDate, shortenAddress } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { usePresale } from "@/providers/provider";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Activity {
   id: any;
@@ -29,8 +30,15 @@ interface ActivitiesTableProps {
 }
 
 export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
+  // const { isPending, error, data } = useQuery({
+  //   queryKey: ['user-activities'],
+  //   queryFn: () =>
+  //     getRecentActivities(),
+  //     enabled: userId != 0
+  // })
   const rowsPerPage = 10; // Number of rows per page
   const { curPage, setCurPage } = usePresale();
+  const [page, setPage] = useState(1);
 
   // Calculate total pages
   const totalPages = Math.max(Math.ceil(length / rowsPerPage), 1);
@@ -56,7 +64,7 @@ export function ActivitiesTable({ activities, length }: ActivitiesTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {paginatedActivities.map((activity, id) => (
+          {activities.map((activity, id) => (
             <TableRow
               key={id}
               className="border-b text-left border-[#F0B90B]/20 bg-black/20 hover:bg-[#F0B90B]/5"

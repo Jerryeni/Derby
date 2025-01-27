@@ -22,6 +22,7 @@ export const PresaleProvider = ({ children }: { children: ReactNode }) => {
     resetStatus,
     initWallet,
     getLevelDetails,
+    getRecentActivities
   } = usePresaleHook();
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export const PresaleProvider = ({ children }: { children: ReactNode }) => {
         resetStatus,
         initWallet,
         getLevelDetails,
+        getRecentActivities
       }}
     >
       {children}
