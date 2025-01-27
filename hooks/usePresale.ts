@@ -267,7 +267,7 @@ export function usePresale() {
       const claimTx = await writeContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
-        functionName: 'claimAllAvailableIcome',
+        functionName: 'claimAllAvailableIncome',
         // args: [userIncomes.raw[0]],
       });
       const claimTxTransactionReceipt = waitForTransactionReceipt(config, {
