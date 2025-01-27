@@ -27,7 +27,7 @@ export default function RootLayout({
           <ContextProvider>
             <Navbar />
             {children}
-            <AlertBanner />
+            {/* <AlertBanner /> */}
           </ContextProvider>
         </PresaleProvider>
 

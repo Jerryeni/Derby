@@ -192,7 +192,7 @@ export function TokenProgress({
                 className="w-3 h-3 md:w-5 md:h-5"
               />
               <span className="text-[#F0B90B] md:text-sm text-[8px] font-semibold ">
-                0.125 USDT
+                0.01 USDT
               </span>
             </div>
           </div>
@@ -260,7 +260,7 @@ export function TokenProgress({
           />
           <AmountInput
             value={amount ? calculateTokenAmount(amount) : ""}
-            onChange={() => {}}
+            onChange={() => { }}
             token="DERB"
             tokenIcon="/images/icon.png"
             readOnly
@@ -279,6 +279,11 @@ export function TokenProgress({
           }
         />
       </div>
+
+      <p className="mt-6 text-[#F0B90B] text-sm font-medium max-w-xl mx-auto"> <span className="text-blue-400">REFER & EARN</span>  <br />
+
+        Earn up to 70% through our affiliate program, distributed across 21 levels to maximize your rewards and grow your income as your network expands.
+      </p>
 
       <div className="border-t border-[#F0B90B]/20 pt-6">
         <Button
@@ -303,7 +308,7 @@ export function TokenProgress({
               referralLink={`${window.location.origin}?ref=${userId}`}
               usdtprice={(tokenUSDTPrice * b2f(userTokens)).toFixed(2)}
               totalEarningsUSDT={b2f(userEarningsUSDT).toFixed(2)}
-              totalEarningsucc={b2f(userTokens,9).toFixed(4)}
+              totalEarningsucc={b2f(userTokens, 9).toFixed(4)}
               userVirtualToken={b2f(userVirtualToken).toFixed(2)}
               totalEarningsBNB={b2f(userEarningsBNB).toFixed(2)}
               totalDepositBNB={b2f(userDepositsBNB).toFixed(2)}
