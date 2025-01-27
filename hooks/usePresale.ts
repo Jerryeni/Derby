@@ -98,12 +98,11 @@ export function usePresale() {
         ],
       })
 
-      const approveTxTransactionReceipt = waitForTransactionReceipt(config, {
+      const approveTxTransactionReceipt = await waitForTransactionReceipt(config, {
         hash: approveTx,
       })
-      approveTxTransactionReceipt.then(() => {
-        setStatus(PurchaseStatus.APPROVED);
-      })
+      console.log({ approveTxTransactionReceipt });
+      setStatus(PurchaseStatus.APPROVED);
       setStatus(PurchaseStatus.PURCHASING);
 
       // Buy tokens
@@ -113,6 +112,7 @@ export function usePresale() {
       //   ref, // ref
       //   parsedAmount
       // );
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       const buyTx = await writeContract(config, {
         abi: PRESALE_ABI,
         address: ADDRESSES.PRESALE,
@@ -126,16 +126,16 @@ export function usePresale() {
         // value: parsedAmount
       })
 
-      const buyTxTransactionReceipt = waitForTransactionReceipt(config, {
+      const buyTxTransactionReceipt =await waitForTransactionReceipt(config, {
         hash: buyTx,
-      })
+      });
 
       // Fetch and update only the necessary data
       const ucci = await getUCCInfo();
       const useri = await getUserInfo(_userAddress, 1);
-      console.log(useri);
+      // console.log(useri);
 
-      buyTxTransactionReceipt.then(() => {
+      // buyTxTransactionReceipt.then(() => {
         setUCCInfo(ucci);
         setUserUCCInfo(useri);
 
@@ -149,7 +149,7 @@ export function usePresale() {
         );
         setStatus(PurchaseStatus.IDLE);
         window.location.reload();
-      })
+      // })
 
 
     } catch (error: any) {
