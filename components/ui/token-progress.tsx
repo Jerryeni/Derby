@@ -250,7 +250,7 @@ export function TokenProgress({
             Enter the Amount of Token You Would Like to Purchase
           </span>{" "}
         </h2>
-
+          <p className="text-primary text-sm md:text-base mb-4">Minimum Investment is $5 </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-4">
           <AmountInput
             value={amount}

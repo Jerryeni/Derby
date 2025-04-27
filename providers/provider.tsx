@@ -25,11 +25,11 @@ export const PresaleProvider = ({ children }: { children: ReactNode }) => {
     getRecentActivities
   } = usePresaleHook();
 
-  useEffect(() => {
-    initWallet().then(() => {
-      console.log("done");
-    });
-  }, [curPage, userAddress, totalTokens]);
+  // useEffect(() => {
+  //   initWallet().then(() => {
+  //     console.log("done");
+  //   });
+  // }, [curPage, userAddress, totalTokens]);
 
   return (
     <PresaleContext.Provider
