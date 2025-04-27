@@ -20,7 +20,7 @@ if (!projectId) {
 const metadata = {
     name: 'derby',
     description: 'derby network',
-    url: 'https://derby.org', // origin must match your domain & subdomain
+    url: 'https://www.presale.derby.global', // origin must match your domain & subdomain
     icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 

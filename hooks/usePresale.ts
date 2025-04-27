@@ -9,6 +9,8 @@ import { connect, getAccount, readContract, waitForTransactionReceipt, writeCont
 import { injected } from '@wagmi/connectors';
 import { config } from '@/lib/config';
 import { parseEther } from 'viem';
+import { InspectionPanelIcon } from 'lucide-react';
+import { useAccount } from 'wagmi';
 
 export enum PurchaseStatus {
   IDLE = 'IDLE',
@@ -47,6 +49,8 @@ export function usePresale() {
       console.error("Error initializing wallet:", error);
     }
   }
+
+
   async function getLevelDetails(userId: number, level: number): Promise<UserLevelDetail[]> {
     try {
       const details = await readContract(config, {

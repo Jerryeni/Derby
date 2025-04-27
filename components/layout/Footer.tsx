@@ -9,9 +9,9 @@ import XIcon from "@/public/images/x.svg";
 const FOOTER_LINKS = {
 
   "Socials": [
-    { label: "X", href: "https://x.com/Derbyofficial", icon: XIcon },
-    { label: "Telegram Channel", href: "https://t.me/Derbyofficial", icon: TelegramIcon },
-    { label: "Telegram Chat", href: "https://t.me/Derbycommunity", icon: TelegramIcon },
+    // { label: "X", href: "https://x.com/Derbyofficial", icon: XIcon },
+    { label: "Telegram Channel", href: "https://t.me/derbyglobal", icon: TelegramIcon },
+    // { label: "Telegram Chat", href: "https://t.me/Derbycommunity", icon: TelegramIcon },
    
     
   ]
@@ -35,7 +35,7 @@ export default function Footer() {
               <span className="text-xl font-bold">Derby</span>
             </Link>
             <p className="text-gray-400 text-sm">
-              © 2024 Derby Network. All rights reserved.
+              © 2025 Derby Network. All rights reserved.
             </p>
           </div>
 

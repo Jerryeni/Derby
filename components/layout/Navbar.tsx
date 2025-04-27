@@ -14,7 +14,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { initWallet, userAddress } = usePresale();
-const {isConnected} = useAccount();
+  const { isConnected } = useAccount();
 
   useEffect(() => {
   }, [userAddress]);
@@ -42,27 +42,26 @@ const {isConnected} = useAccount();
             <span className="text-lg md:text-xl font-normal">DERBY</span>
           </div>
 
-          
+
 
           {/* Desktop Buttons */}
 
           <div className="hidden md:flex items-center space-x-4">
             <div className="social flex gap-2 items-center">
-            <Link
-                        href='https://t.me/universecryptochain'
-                        className="text-muted-foreground flex gap-1 items-center hover:text-foreground transition-colors font-light"
-                      >
-                        {/* <Image
-                          src="/images/telegram.svg"
-                          alt="telegram-logo"
-                          width={18}
-                          height={18}
-                          priority
-                        /> */}
-                        <span>Chat</span>
-
-                      </Link>
-            <Link
+              <Link
+                href="https://t.me/derbyglobal"
+                className="text-muted-foreground flex gap-1 items-center hover:text-foreground transition-colors font-light"
+              >
+                <Image
+                  src="/images/telegram.svg"
+                  alt="telegram-logo"
+                  width={18}
+                  height={18}
+                  priority
+                />
+                <span>Chat</span>
+              </Link>
+              {/* <Link
                 href='https://x.com/derbyhainofficial'
                 className="text-muted-foreground hover:text-foreground transition-colors font-light"
               >
@@ -74,8 +73,8 @@ const {isConnected} = useAccount();
                   priority
                 />
                 
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 href='https://t.me/derbyhaincommunity'
                 className="text-muted-foreground hover:text-foreground transition-colors font-light"
               >
@@ -86,7 +85,7 @@ const {isConnected} = useAccount();
                   height={24}
                   priority
                 />
-              </Link>
+              </Link> */}
             </div>
             {/* <Button
               className="bg-primary !rounded-xl hover:bg-secondary h-10 text-sm text-white inset-0"
@@ -105,7 +104,7 @@ const {isConnected} = useAccount();
             >
               {userAddress === "" ? "Connect Wallet" : shortenAddress(userAddress)}
             </Button> */}
-            <ConnectButton/>
+            <ConnectButton />
           </div>
 
           {/* Hamburger Menu for Mobile */}
@@ -144,14 +143,14 @@ const {isConnected} = useAccount();
                   </Button>
                 </div>
 
-                
+
 
                 {/* Buttons in Mobile Menu */}
                 <div className="mt-auto space-y-6">
                   <div className="flex flex-col items-center space-y-4">
-                   
+
                     <div className="social flex gap-4 items-center">
-                      <Link
+                      {/* <Link
                         href='https://x.com/derbyhainofficial'
                         className="text-muted-foreground flex items-center hover:text-foreground transition-colors font-light"
                       >
@@ -163,9 +162,9 @@ const {isConnected} = useAccount();
                           height={24}
                           priority
                         /> 
-                      </Link>
+                      </Link> */}
                       <Link
-                        href='https://t.me/universecryptochain'
+                        href="https://t.me/derbyglobal"
                         className="text-muted-foreground flex gap-1 items-center hover:text-foreground transition-colors font-light"
                       >
                         <Image
@@ -176,9 +175,8 @@ const {isConnected} = useAccount();
                           priority
                         />
                         <span>Chat</span>
-
                       </Link>
-                      <Link
+                      {/* <Link
                         href='https://t.me/derbyhaincommunity'
                         className="text-muted-foreground gap-1 flex items-center hover:text-foreground transition-colors font-light"
                       >
@@ -191,11 +189,11 @@ const {isConnected} = useAccount();
                         />
                         <span>Channel</span>
 
-                      </Link>
+                      </Link> */}
                     </div>
-                    
-                      <ConnectButton />
-                    
+
+                    <ConnectButton />
+
                   </div>
                 </div>
               </div>
